@@ -1,0 +1,25 @@
+Status Update:
+We met our project lead for the first time on Wednesday evening (9/21) and discussed some background on Kestrel 
+as well as some potential projects we could consider working on. He also assigned us to read an article and watch a
+video of the Kestrel BlackHat Demo of Kestrel, which I already did. Otherwise, he told us to continue thinking about 
+(and researching) how we wanted to contribute.
+
+
+Comments:
+One of the resources our project lead recommended us to start with was the Kestrel documentation site in general 
+(https://kestrel.readthedocs.io/en/latest/index.html). I admire how organized the information presented is as well as
+the detail it goes into for some more confusing aspects of Kestrel specifics. Generally speaking, I think Kestrel is
+very well documented. At the same time, as someone who is *very* new to cybersecurity in general, it was still quite 
+overwhelming. I understood the words I was reading (for the most part), but they didn't make sense when put together
+in sentences.
+
+After our first meeting, I think he had a better idea of how little experience most of our team members had, so the
+article he assigned (https://dl.acm.org/doi/10.1145/3457416) us to read gave me a lot better background on the field 
+of cybersecurity, like where Kestrel stands as a progressive new concept to further advance the defensive side, 
+which Mr. Shu describes as dynamic cyber defense ("the best defense is a good offense"). I think I gained more from
+reading it than I did reading the documentation. That being said, I definitely have to go over both again.
+
+I also messed around in the tutorial modules they have and it gave me a much better idea of how Kestrel works on
+Jupyter (https://mybinder.org/v2/gh/opencybersecurityalliance/kestrel-huntbook/HEAD?filepath=tutorial) because I was
+a little flummoxed how working with a new language would work. I started looking through their list of issues to see
+what looked doable with what I know now.
