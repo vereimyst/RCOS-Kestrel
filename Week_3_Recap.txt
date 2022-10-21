@@ -1,0 +1,77 @@
+Status Update:
+Made some more progress on the Auto-Complete function issue I am working on. I made some changes, but I'm not 
+sure if they are correct or not. Will contact my project lead with some questions to confirm. I plan to start
+testing if my code process seems correct (and the project lead confirms it), otherwise he will hopefully give
+some hints about what to change and I will do that. Then I will start on testing. I was also notified that we 
+need to have commits for the mid-term check and that commits on a private repository (e.g. blogging my progress)
+would be enough, so I will be working on that as well.
+
+
+Comments:
+I spent majority of my time earlier in the week understanding how the do_complete() function worked. Some of
+my notes for that are listed below:
+    2 scenarios: existing kestrel variable (1) and not yet existing (2) [in session]
+        - don't forget to include syntax error cases
+        CASE 1:   DISP <var>  ATTR ___autocomplete_here___
+            - lists all ATTR if no specs
+            - kestrel cache to find existing variables VarStruct
+        (https://github.com/opencybersecurityalliance/kestrel-lang/blob/develop/src/kestrel/symboltable.py#L6)
+            - data bucket kestrel for data samples; kestrel main repository tests folder
+            - language specification -> kestrel command -> save (dumps kestrel var data into a local file)
+            - kestrel uses parser called "Lark" (kestrel-lang/kestrel.lark https://github.com/lark-parser/lark)
+        CASE 2:   WHERE [process:___autocomplete_here__]
+            - context of mapping bt stix into a yaml/json file to load into a function u create
+                - is that for testing?
+            - stix for patterning language (e.g. stix process object)
+                - cyber-observable objects
+                - SCOs = entities kestrel uses
+                - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_mlbmudhl16lr
+        Other notes i forget where they come in:
+            - (VirusTotal API group) kestrel analytics template avail (partif file??)
+            - Where would I put a parsing function for the STIX SCO documentation -> autocomplete?
+                - Did I miss this?
+                - rmber something about https://firepit.readthedocs.io/en/stable/readme.html being mentioned
+                - Start with CASE 1 regardless...
+
+I added some starter changes (based on my understanding) initially under the overarching if-statements.
+    if "START" in prefix or "STOP" in prefix:
+        ...
+    elif "://" in last_word:
+        ...
+    # < start added code >
+    elif "DISP" in prefix:
+        # display entity list autocomplete from existing scope of variables
+        # also checking for if ATTR then list possible attributes from VarStruct thing
+        # symtable (dict) - maps kestrel var names to associated Kestrel internal data structure (VarStruct)
+        allnames = [
+            v for v in self.get_variable_names() if v.startswith(prefix)
+        ]
+    elif "ATTR" in prefix:
+        #check if variable exists in session, then auto-complete all attributes the variable has
+        if last_word in self.get_variable_names():
+            allnames = [
+                get_variable(last_word)
+            ]
+            _logger.debug(f"auto-complete from variable attributes {last_word}: {allnames}")
+        else:
+            allnames = []
+            _logger.debug("cannot find auto-complete variable")
+    # < end added code >
+    else:
+        ...
+
+After meeting with the project lead, I realized that I had somewhat misunderstood the cases there and the 
+general autocomplete function actual started after the "else" statement (at the end of the snippet of code
+above). I confirmed that my thought process on the internal auto-completion portion was correct, so it was
+a simple change of moving my code to a different "elif" statement.
+    elif token.startswith("STIXPATH"):
+        # TODO: figure out the varname and get its attrs
+        if words[-2] in varnames:
+            var_name = self.symtable[words[-2]]
+        tmp.extend(get_entity_id_attribute(var_name))
+        # how to figure out what the variable name is??
+        # check line for most recently mentioned variable
+
+    elif token.startswith("STIXPATTERNBODY"):
+        # TODO: figure out how to complete STIX patterns
+        continue
