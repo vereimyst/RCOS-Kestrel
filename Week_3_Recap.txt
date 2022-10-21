@@ -62,16 +62,18 @@ I added some starter changes (based on my understanding) initially under the ove
 
 After meeting with the project lead, I realized that I had somewhat misunderstood the cases there and the 
 general autocomplete function actual started after the "else" statement (at the end of the snippet of code
-above). I confirmed that my thought process on the internal auto-completion portion was correct, so it was
-a simple change of moving my code to a different "elif" statement.
+above). I confirmed that my thought process on the internal auto-completion portion was correct, so it was a 
+simple change of moving my code to a different "elif" statement.
     elif token.startswith("STIXPATH"):
         # TODO: figure out the varname and get its attrs
-        if words[-2] in varnames:
-            var_name = self.symtable[words[-2]]
-        tmp.extend(get_entity_id_attribute(var_name))
         # how to figure out what the variable name is??
         # check line for most recently mentioned variable
+        tmp.extend get_variable(last_word)
 
-    elif token.startswith("STIXPATTERNBODY"):
+    elif token.startswith("STIXPATTERNBODY"): # Case 2 (ignore for now)
         # TODO: figure out how to complete STIX patterns
         continue
+
+I'm a really hard time trying to find where to get the NAMES of the attribute values a variable has versus 
+what get_variable() is retrieving (just the values). Also there is the issue of whether there is an 
+existing parsing function for getting the variable a keyword function is referring to in the same line.
