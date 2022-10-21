@@ -1,0 +1,35 @@
+Status Update:
+Assigning the Issues that we would start working on and general planning for what we would be doing for the rest 
+of the year.
+
+
+Comments:
+For the first part of the week I was mostly getting more familiar with how Kestrel works and working with the 
+BlackHat demo they have, which was harder to understand because it was more about actually building huntflows. I'm
+still not as familiar with the actual cybersecurity-related concepts, so I was mostly just replicating what the
+instructions where telling us to look at or do. I want to try working more on huntflow development, but I think
+I wouldn't be able to make any meaningful contributions anytime soon, so I'll probably focus more on front-/back-
+end implementation of the language and runtime in the meantime instead.
+
+Since we have an external project lead, I realized we needed to submit the project plan still, so I wrote up it up
+based on the documentation website and the presentation that Mr. Shu used during project pitches. I uploaded the 
+project plan on here as a pdf later on (for the commit) and started taking a look at the issues that I wanted to 
+work on. Apparently a lot of the issues aren't very well-documented (according to our Project Lead), so he
+recommended that we start with the issues labelled with "Hacktoberfest" since they would have better documentation
+than the other issues listed.
+
+I had been looking at one of the issues "Create variable from other variable's attributes," but after taking a 
+closer look at what they were asking for, I realized I wasn't nearly familiar enough with their code base yet to 
+take it on. I ended up setting with the issue "Attribute auto-complete" during the discussion meeting we had with 
+our Project Lead this week. I'm planning on taking a closer look at what they are asking for as well as the code
+that they linked to in the issue description. It goes to the existing auto-complete function they have, so 
+understanding how it works will probably be helpful for me before I start adding to its functionality.
+
+
+Links:
+BlackHat Demo
+    https://mybinder.org/v2/gh/opencybersecurityalliance/black-hat-us-2022/HEAD?filepath=demo
+"Create variable from other variable's attributes"
+    https://github.com/opencybersecurityalliance/kestrel-lang/issues/155
+"Attribute auto-complete" 
+    https://github.com/opencybersecurityalliance/kestrel-lang/issues/79
