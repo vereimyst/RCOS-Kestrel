@@ -1,0 +1,90 @@
+Status Update:
+I was trying to to set up my computer for testing the changes I made since I wasn't sure what exactly the 
+functions I was calling were returning. Additionally, I thought there was an existing function for identifying 
+what variable was being referred to in a line of code (for auto-completion), but I couldn't find it. The Project 
+Lead ended up clarifying that we would need actually to write the function to do so. He clarified on how to 
+access the debug files and setup the testing environment for the code that I was looking at in particular (as 
+well as an existing test script they had for testing the auto-completion function). I plan to finish testing and 
+finish writing the function for identifying the variable we are referencing in a given line.
+
+
+Comments:
+From last week, I made some changes to the existing autocomplete function and added what I thought might achieve 
+the desired result (autocompletion for attributes), but only for a hard coded case for function calls. Since I 
+decided to focus on Case 1, there are 2 parts to what needs to be done
+    1. Identify the variable needing attribute auto-completion
+        Pre-requisite: the variable exists in scope of the session. (ERROR OTHERWISE)
+    2. Return the available attributes the variable has
+        Pre-requisite: there is at least one. (Nothing otherwise?)
+I decided to hard code a testing case and focus on step 2, finding the attributes that an existing variable has
+in the scope of the call. I spent a long time digging around through the code base, which was one of the main 
+troubles I had, since I'm not familiar with the organization of their code. Additionally, Python further
+exacerbates this issue since it doesn't have explicit function return types. For example:
+    def _get_entity_type(stmt, symtable, dep_vars):
+        if "type" in stmt:
+            return stmt["type"]
+        else:
+            dep_var_name = dep_vars[0]
+            dep_var = symtable[dep_var_name]
+            return dep_var.type
+from the symbol table definition file. It's very hard to tell from a glance what this function returns as well as
+what types the parameters taken in are. The naming of variables also tends to be somewhat ambiguous at times, so
+I wasted a long time trying to understand the code flow of quite a few arbitrary functions that I thought might be
+related to what I was looking for (but turned out not to be). In the end I wasn't able to figure it out before the
+weekly meeting we have with our Project Lead, and he resolved my question in a few clicks by showing me a function
+that returned the information that I was looking for. I also thought that there would be an existing function to 
+find the variable that a command is being called for details regarding (i.e. DISP <var> ATTR __, the <var> in 
+question), but he clarified that we would need to write the function on our own. Hence, step 1 won't be as 
+straightforward as I thought.
+
+For the function that returns attributes of a variable,
+    def get_entity_id_attribute(variable):
+        # this function should always return something
+        # if no entity id attribute found, fall back to record "id" by default
+        # this works for:
+        #   - no appriparite identifier attribute found given specific data
+        #   - "network-traffic" (not in stix_2_0_identical_mapping)
+        id_attr = "id"
+
+        if variable.type in stix_2_0_identical_mapping:
+            available_attributes = variable.store.columns(variable.entity_table)
+            for attr in stix_2_0_identical_mapping[variable.type]:
+                if attr in available_attributes:
+                    query = Query()
+                    query.append(Table(variable.entity_table))
+                    query.append(Projection([attr]))
+                    query.append(Unique())
+                    rows = variable.store.run_query(query).fetchall()
+                    all_values = [row[attr] for row in rows if row[attr]]
+                    if all_values:
+                        id_attr = attr
+                        break
+        return id_attr
+Looking over the function flow, it has to take in the kestrel variable type (an instance of the VarStruct class)
+and returns, at minimum "id" as an available attribute for autocompletion. [ Should that be intended behavior? 
+Need to check with our project lead on that still. ] Otherwise it assembles a string of all the possible variable
+attributes. I found through some basic testing that it was outputting both "new" and "name" as possible auto-fill 
+values, for whatever reason. Unfortunately, I still haven't quite figured out how to access the debug_logger files
+that Kestrel has. As a side note, I also reached out to Professor Turner regarding possibly getting access to VMs
+(with Linux OS) from the school for further testing related to Kestrel, at the behest of our project lead. Perhaps
+the debugging will work through the VM, or I'll find out why the debug files aren't showing up some time before 
+then.
+
+
+Links:
+symboltable.py file
+    https://github.com/opencybersecurityalliance/kestrel-lang/blob/976daec4dfecbefa62a9e345a734d38568d4cea5/
+        src/kestrel/symboltable.py#L96
+
+key files for info
+    kestrel syntax parsing
+        https://github.com/opencybersecurityalliance/kestrel-lang/blob/develop/src/kestrel/syntax/kestrel.lark
+    the structure kestrel variables created in a session follow/are stored in
+        https://github.com/opencybersecurityalliance/kestrel-lang/blob/976daec4dfecbefa62a9e345a734d38568d4cea5/
+            src/kestrel/symboltable.py
+    get_entity_table()
+        https://github.com/opencybersecurityalliance/kestrel-lang/blob/976daec4dfecbefa62a9e345a734d38568d4cea5/
+            src/kestrel/semantics.py#L21
+    get_entity_id_attribute() function
+        https://github.com/opencybersecurityalliance/kestrel-lang/blob/9a3297a7d42ac1787c7f09b100885f4bcefcd72f/
+            src/kestrel/codegen/relations.py#L112
