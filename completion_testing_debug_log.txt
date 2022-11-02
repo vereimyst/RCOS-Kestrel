@@ -1,0 +1,13 @@
+16:18:53 DEBUG kestrel.session code="# display the information (attributes name, pid) of the entities in variable `browsers`
+DISP browsers ATTR " prefix="# display the information (attributes name, pid) of the entities in variable `browsers`
+DISP browsers ATTR " last_word=""
+16:18:53 DEBUG kestrel.session standard auto-complete
+16:18:53 DEBUG kestrel.session 6A123456
+16:18:53 DEBUG kestrel.session exception: [ERROR] KestrelSyntaxError: invalid token "" at line 2 column 15, expects "ATTRIBUTES"
+rewrite the failed statement.
+16:18:53 DEBUG kestrel.session keywords: {'avg', 'desc', 'nunique', 'accepted', 'LAST', 'WHERE', 'ASC', 'null', 'join', 'last', 'group', 'asc', 'loaded', 'ACCEPTED', 'DISP', 'created', 'GET', 'count', 'or', 'START', 'new', 'MIN', 'COUNT', 'OR', 'LOAD', 'bin', 'AS', 'where', 'start', 'by', 'sort', 'BIN', 'WITH', 'TO', 'BY', 'FIND', 'get', 'NUNIQUE', 'limit', 'find', 'CONTAINED', 'sum', 'stop', 'apply', 'LOADED', 'JOIN', 'SAVE', 'OFFSET', 'contained', 'max', 'attr', 'as', 'to', 'SUM', 'timestamped', 'ATTR', 'MAX', 'FROM', 'save', 'and', 'min', 'TIMESTAMPED', 'LINKED', 'NEW', 'OWNED', 'info', 'disp', 'from', 'AND', 'load', 'LIMIT', 'with', 'INFO', 'on', 'owned', 'ON', 'APPLY', 'CREATED', 'SORT', 'NULL', 'offset', 'linked', 'DESC', 'STOP', 'AVG', 'GROUP'}
+16:18:53 DEBUG kestrel.session token: ATTRIBUTES
+16:18:53 DEBUG kestrel.session varname: browsers
+16:18:53 DEBUG firepit.sqlitestorage Executing query: PRAGMA table_info("browsers")
+16:18:53 DEBUG firepit.sqlitestorage browsers columns = ['name', 'pid', 'id']
+16:18:53 DEBUG kestrel.session ['id', 'name', 'pid'] -> ['id', 'name', 'pid']
