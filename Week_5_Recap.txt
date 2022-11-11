@@ -1,0 +1,34 @@
+Status Update:
+I was trying to to set up my computer for testing the changes I made since I wasn't sure what exactly the functions I
+was calling were returning. Additionally, I thought there was an existing function for identifying what variable was
+being referred to in a line of code (for auto-completion), but I couldn't find it. The Project Lead ended up clarifying
+that we would need actually to write the function to do so. Our project lead clarified on how to access the debug files
+and setup the testing environment for the code that I was looking at in particular (as well as an existing test script
+they had for testing the auto-completion function). I plan to finish testing and finish writing the function for
+identifying the variable we are referencing in a given line.
+
+
+Comments:
+I had a lot of trouble working with the Ubuntu WSL setup and finding where my debug files were because I haven't worked
+very extensively with Linux in general. The first issue I ran into was not knowing how to set up the environment
+variable to allow debug log statements to be stored. Then I couldn't figure out why the /tmp files weren't showing in
+my Jupyter Notebook directly (which was where I assumed they would be). Lastly, when I finally did find the debug logs,
+the session.log files were always blank when I tried to access them. I figured out that it was because my Jupyter
+Notebook session ended, so the files were cleared out as a result.
+https://media.discordapp.net/attachments/1026951836369961050/1034574285429280878/unknown.png
+https://media.discordapp.net/attachments/1026951836369961050/1032723974154637413/unknown.png
+
+In the midst of all that, I was trying to figure out a separate way to obtain the debug logs by running the existing
+test script that checked the functionality of the do-complete() function that I was modifying. As such, I spent some
+time trying to figure out how the data in the test script file was formatted, so I could add in my own test cases that
+would check the attribute autocompletion feature. Plus, I had some issues initially with the version of pytest that was
+installed running on Python 2.7 instead of Python 3, like it needed to be.
+https://media.discordapp.net/attachments/1026951836369961050/1032452785800761344/unknown.png
+https://media.discordapp.net/attachments/1026951836369961050/1032446279181156372/unknown.png
+
+After I was finally able to test the variable and access the debug logs, I realized that my function was written
+incorrectly (from the Project Lead's explanation) and that the hard-coded test case I had for testing temporarily was
+actually causing some of the issues I was running into. Thankfully, our Project Lead also gave me some hints on how to
+proceed (correctly this time) with what I knew/had now and the changes weren't very major. He also gave me a couple
+tips on functions I could consider for using to write the actual parsing for last variable called (although I probably
+will not get to that aspect quite yet, or at least not in depth).
