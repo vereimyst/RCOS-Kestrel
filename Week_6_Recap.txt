@@ -1,0 +1,25 @@
+Status Update:
+I added some test cases to the test script that exists already for kestrel codebase. I also double checked with my
+project lead whether the test cases I wrote fit the script requirements as well as if my function appears to be written
+correctly. Earlier on I was also compiling commits under my private repository for my progress thus far working on
+Kestrel and pushing my changes on my local versions to the fork of Kestrel I have. I managed to get somewhat correct
+output, and got some more guidance on testing and whatnot. Hopefully, I'll be able to submit a pull request by the end
+of this week if I am able to figure out why I am getting an output for autocompletion that shouldn't be there. I also
+need to add a function to parse the line for the variable it is referring to when requesting attributes (as well as a
+no-output option when the variable cannot be found). More testing is needed as well as a few other code changes that I
+need to make. Not sure why I am getting a certain output when testing, hopefully will get a better idea of why I'm
+getting it w/ new debug lines I will be adding.
+
+Comments:
+I went through the existing test script to see which file it was pulling its variables from so I could add a line for
+autocompletion for the existing variables in scope. Turns out it gets variables from 'network-traffic' instead of
+'processes' like I've been working with so far in local testing. A little worried that might mess things up because of
+differing values (theoretically it should be the same though... hopefully). Our project lead said my logic looks good,
+but he couldn't verify if the results were written as should be expected or not either.
+
+For the unexpected output I'm getting in testing, when I request autocompletion in line 17 of the Testing.hf file I
+uploaded to this repository, I'm getting ['ew', and 'ame'] as the results. I should only be getting 'ame' since 'name'
+is the only attribute value that fits the autocompletion request ('new' is not a valid attribute). I'm not sure why or
+where it's pulling 'new' from. I checked the logic of the function and it's going through a lot of tokens that I don't
+think it should be. Additionally, 'name' doesn't even show up in the output list in the debugging logs, which makes
+absolutely no sense (how is it returning the value at all for autocompletion??).
