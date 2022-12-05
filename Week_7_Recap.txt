@@ -1,0 +1,46 @@
+Status Update:
+A lot more development on the actual autocompletion feature addition. I was able to complete the function as planned,
+but I uncovered a bug in terms of addressing partial completion for attributes (wherein a partial value is considered
+complete, but still used as the prefix for completing the next term). Additionally, some attributes apparently have
+subattributes underneath (under a different table internally (ipv4-addr or ipv6-addr) instead of firepit and that would
+need to be SQL JOIN'ed together or something; overall already pulled in auto_deref, but the function takes time, so
+considering caching that info), which I need to determine how to address that. Because the addition of attribute
+autocompletion requires addressing this new bug I've found, I need to start by addressing the bug, so I will be taking
+time to understand why the code is behaving as it is (variable autocompletion works fine, but attribute autocompletion
+does not).(I need to make an issue thing too...) The suggestion my project lead made was maybe I need to rewrite their
+autocompletion function logic entirely. Yay. Additionally, I want to add some fine tuning to the parsing portion of my
+code (to find the last variable called in the statement). A bit of confusion on how the same function is treating
+autocompletion differently depending on if it is a variable or an attribute. Trying to determine if there was reasoning
+for the difference or if it can be removed (as a solution to the new issue). Generally still not familiar enough with
+their code flow to be able to find a solution quickly.
+
+Comments:
+I wrote the parsing for checking the last variable it encountered, I haven't figured out how to limit it to the current
+line only. I'm using the prexisting list of all words in the current code block, so there's no way to check for line
+delimiters. The one way I'm considering is the existing parsing function's occasional return of "input" (not sure why
+it doesn't always have a valid value for that). Without considering quite a few convoluted hidden cases, the function
+can be considered "complete" for the time being. The major bug being the function behaving incorrectly entirely.
+
+The partial field completion (e.g. 'n' for ATTRIBUTES field) is treated as a complete value (e.g. attr = 'n'). Thus,
+the parser moves on to the next field for autocompletion (e.g. COMMAND token since an ATTRIBUTES field signals a
+completed statement) and returns all commands as suggetion values. But here's where it gets wonky: as a final step, it
+filters those commands by those with prefixes that match the partial field (e.g. 'n') even though the partial field was
+treated as complete for the previous field... meaning that the function just makes no sense. That's why I was getting
+'new' as an output for the autocompletion suggestion previously. The 'name' suggestion was coming from Jupyter's
+interface, not Kestrel (that's quite problematic, if you think about it).
+
+The test cases I wrote for the test script variables ('network-traffic' vs 'processes') also ended up being somewhat
+off. Not for any reasons that I expected though. As stated in my status update above, some attributes have
+subattributes. Namely, because they are network-traffic values, we have to pull information from ipv4/6-addr tables
+in addition to the column names that we have already. The way I'm thinking we can address this is just ignoring the
+subvalue (treating it as a new, separate field for the next autocompletion call instead). I checked that directly
+requesting DISP conns ATTR src/dst_ref does output a value (should be the id value, if I'm not wrong), so it wouldn't
+cause any additional errors to my knowledge.
+
+Because of the new issue that I've discovered (1. I need to report it first), I will probably be working on addressing
+that before I can proceed any further on the current issue I'm working on (#79). Also, since these issues involve more
+frontend, interfacing issues, I think they're more on the backburner for the main contributors (they are probably more
+concerned with actual development-related issues). Hopefully that will give me some leeway in terms of time for working
+on it. I haven't worked with writing autocompletion functions before, so this will be a first. I ran by my plan for
+this with my project lead already, it starts with me researching other autocompletion functions since I think the
+existing logic seems rather inefficient.
