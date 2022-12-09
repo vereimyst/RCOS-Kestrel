@@ -1,0 +1,14 @@
+Status Update:
+I reported a new issue that I found regarding the autocompletion function that I was working on and cleaned up my
+completed addition of the local addition of the attribute autocompletion feature. I've also discussed with my project
+lead regarding the blocking of the current issue I'm working on (#79) due to this new issue (#264). My plan is to start
+considering methods of addressing this new issue I've found because I cannot move forward with adding on a new feature
+to the autocompletion function when the function itself already doesn't work as intended. Issue 264 is the new blocker
+that I am working to address. It involves revamping the entire logic of the Kestrel language autocompletion function,
+so general knowledge regarding that and some optimization thoughts (their current system involves parsing text twice
+and using a try + except loop).
+
+Comments:
+Because break is coming up, I have a lot of exams coming up, so my work on this might be on hold a little bit. I'm just
+slowly compiling some information on autocompletion logic whenever I get a spot of time. I'm also trying to add some
+more documentation on the issue as I'm going to make things easier when I do pick it up back in full. 
