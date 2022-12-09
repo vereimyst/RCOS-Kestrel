@@ -1,0 +1,18 @@
+Status Update:
+This week I was mostly working on the slides that we would be presenting on Kestrel. Additionally, I was doing some
+research on autocompletion functions that have been written by other people (for the general logic and algorithms) and
+compiling some general consensus information as a guideline for when I rewrite Kestrel's existing function. Our project
+lead said to write up a rough presentation with said information so that we could discuss how to proceed (e.g. which
+options might work best with the framework our current codebase has, etc.). I plan to put together the rough
+presentation for the project lead and hopefully get started on outlining how the new autocompletion function logic
+should look (writing the psuedocode if I'm really being ambitious), but it's looking to be rather unlikely due to
+upcoming exams and final project due dates. I don't want to just take the structure that other autocompletion functions
+have if possible (that seems kind of cheap). Additionally, because I am still not as familiar with the code base of
+Kestrel as I'd like to be, I'm not sure if some implementations are feasible (and if they are, I'm not sure how I would
+go about implementing them). There's a lot of questions regarding "optimization" that I'm also not quite equipped well
+enough to address. For example, the current logic parses the code block twice and forces an error to go through the
+"standard autocompletion" which is in the exception block (try and except loop). There's a possibility that I will have
+to write a new parser method entirely or somehow manually remove the last partial field before parsing and take it into
+account afterwards. The latter sounds substantially easier.
+
+Comments:
